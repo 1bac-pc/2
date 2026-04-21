@@ -1,0 +1,955 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Physique-Chimie 1er BAC BIOF</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: '#81e332',
+              'brand-dark': '#518d02',
+              'brand-light': '#f0fdf4',
+              'brand-muted': '#dcfce7',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      .hidden { display: none; }
+    </style>
+  </head>
+  <body class="min-h-screen bg-gray-50 font-sans text-gray-900 selection:bg-brand/30 selection:text-brand-dark">
+    
+    <!-- Navbar -->
+    <nav class="bg-brand-dark text-white sticky top-0 z-50 shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center gap-2 cursor-pointer" data-theme-target="home">
+            <div class="bg-white p-1 rounded-lg">
+              <i data-lucide="flask-conical" class="w-6 h-6 text-brand-dark"></i>
+            </div>
+            <span class="font-bold text-xl tracking-tight hidden sm:block">Physique 1er BAC BIOF</span>
+          </div>
+
+          <!-- Desktop Menu -->
+          <div class="hidden md:flex items-center space-x-8">
+            <button data-theme-target="home" class="hover:text-brand transition-colors text-brand font-semibold">Accueil</button>
+            
+            <!-- Physics Dropdown -->
+            <div class="relative group dropdown">
+              <button class="flex items-center gap-1 hover:text-brand transition-colors dropdown-trigger">
+                Physique <i data-lucide="chevron-down" class="w-4 h-4"></i>
+              </button>
+              <div class="absolute top-full left-0 w-64 bg-white text-gray-800 rounded-b-lg shadow-xl py-2 hidden dropdown-menu">
+                <button data-theme-target="physics_motion" class="w-full text-left px-4 py-2 hover:bg-brand-light transition-colors">Mouvement et Interactions</button>
+                <button data-theme-target="energy" class="w-full text-left px-4 py-2 hover:bg-brand-light transition-colors">Énergie</button>
+                <button data-theme-target="waves" class="w-full text-left px-4 py-2 hover:bg-brand-light transition-colors">Ondes et Signaux</button>
+              </div>
+            </div>
+
+            <!-- Chemistry Dropdown -->
+            <div class="relative group dropdown">
+              <button class="flex items-center gap-1 hover:text-brand transition-colors dropdown-trigger">
+                Chimie <i data-lucide="chevron-down" class="w-4 h-4"></i>
+              </button>
+              <div class="absolute top-full left-0 w-64 bg-white text-gray-800 rounded-b-lg shadow-xl py-2 hidden dropdown-menu">
+                <button data-theme-target="chemistry" class="w-full text-left px-4 py-2 hover:bg-brand-light transition-colors">Constitution de la Matière</button>
+              </div>
+            </div>
+
+            <button data-theme-target="about" class="hover:text-brand transition-colors">À propos</button>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <div class="md:hidden">
+            <button id="menu-toggle" class="p-2">
+              <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="md:hidden bg-brand-dark border-t border-brand-dark/20 overflow-hidden hidden">
+        <div class="px-4 py-4 space-y-2">
+          <button data-theme-target="home" class="block w-full text-left py-2 hover:text-brand">Accueil</button>
+          <div class="py-2 font-semibold text-brand">Physique</div>
+          <button data-theme-target="physics_motion" class="block w-full text-left pl-4 py-1 hover:text-brand">Mouvement</button>
+          <button data-theme-target="energy" class="block w-full text-left pl-4 py-1 hover:text-brand">Énergie</button>
+          <button data-theme-target="waves" class="block w-full text-left pl-4 py-1 hover:text-brand">Ondes</button>
+          <div class="py-2 font-semibold text-brand">Chimie</div>
+          <button data-theme-target="chemistry" class="block w-full text-left pl-4 py-1 hover:text-brand">Matière</button>
+          <button data-theme-target="about" class="block w-full text-left py-2 hover:text-brand">À propos</button>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <!-- Home Section -->
+      <section data-theme-section="home">
+        <!-- Hero -->
+        <section class="relative h-[500px] flex items-center justify-center bg-brand-dark text-white overflow-hidden">
+          <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-10 left-10 w-64 h-64 bg-brand rounded-full blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-10 right-10 w-96 h-96 bg-brand-dark rounded-full blur-3xl animate-pulse delay-1000"></div>
+          </div>
+          <div class="relative z-10 text-center px-4 max-w-4xl">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">Physique-Chimie <span class="text-brand">1er BAC BIOF</span></h1>
+            <p class="text-xl md:text-2xl text-brand-light mb-10 leading-relaxed">Plateforme complète pour les Sciences Expérimentales : Cours, simulations et exercices.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+              <button data-theme-target="physics_motion" class="px-8 py-4 bg-brand hover:bg-brand-dark text-white rounded-full font-bold text-lg transition-all transform hover:scale-105 shadow-lg flex items-center gap-2">
+                Explorer la Physique <i data-lucide="chevron-right" class="w-5 h-5"></i>
+              </button>
+              <button data-theme-target="chemistry" class="px-8 py-4 bg-white hover:bg-gray-100 text-brand-dark rounded-full font-bold text-lg transition-all transform hover:scale-105 shadow-lg flex items-center gap-2">
+                Explorer la Chimie <i data-lucide="chevron-right" class="w-5 h-5"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Features Grid -->
+        <section class="py-20 px-4 max-w-7xl mx-auto">
+          <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold mb-4">Les 4 Thèmes du Programme</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">Tout le contenu nécessaire pour réussir votre année de spécialité, organisé selon le bulletin officiel.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Chemistry Card -->
+            <button data-theme-target="chemistry" class="bg-white rounded-3xl shadow-sm border border-gray-100 text-left hover:shadow-md transition-all group overflow-hidden flex flex-col h-full">
+              <div class="h-32 w-full relative overflow-hidden">
+                <img src="https://imgs.search.brave.com/Ac2O-BccqC2TTQDtOIZtje0r2jNcT7_oeyDTqlKD3HY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA5LzA0LzgxLzY3/LzM2MF9GXzkwNDgx/Njc1OF9tbEY4ZlUz/UktHU2JITEpOaGp5/ZFU3c0R0T0htZ2pI/Ni5qcGc" alt="Chimie" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" referrerPolicy="no-referrer" />
+                <div class="absolute inset-0 bg-gradient-to-t from-white/90 to-transparent"></div>
+              </div>
+              <div class="p-8 pt-0 -mt-8 relative z-10">
+                <div class="bg-white w-14 h-14 rounded-2xl flex items-center justify-center text-brand-dark mb-6 shadow-sm group-hover:bg-brand group-hover:text-white transition-colors border border-gray-100">
+                  <i data-lucide="flask-conical" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2 leading-tight">Constitution et Transformations de la Matière</h3>
+                <div class="flex items-center gap-1 text-brand-dark font-semibold text-sm mt-4">Voir les chapitres <i data-lucide="chevron-right" class="w-4 h-4"></i></div>
+              </div>
+            </button>
+            <!-- Physics Motion Card -->
+            <button data-theme-target="physics_motion" class="bg-white rounded-3xl shadow-sm border border-gray-100 text-left hover:shadow-md transition-all group overflow-hidden flex flex-col h-full">
+              <div class="h-32 w-full relative overflow-hidden">
+                <img src="https://imgs.search.brave.com/t2HElgdw-HIiJYpNHgzWafzo0CkcR1OVCu1kGekg7tw/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTE3/MTg4ODU1OS9waG90/by9zcG9ydHMtZXF1/aXBtZW50LmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz1hcWVs/c01kME9EMnJ5a1VN/ZzJQNEl3M0lBZl9f/TGVWZk9qWG1Fa2M1/TWVZPQ" alt="Physique" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" referrerPolicy="no-referrer" />
+                <div class="absolute inset-0 bg-gradient-to-t from-white/90 to-transparent"></div>
+              </div>
+              <div class="p-8 pt-0 -mt-8 relative z-10">
+                <div class="bg-white w-14 h-14 rounded-2xl flex items-center justify-center text-brand-dark mb-6 shadow-sm group-hover:bg-brand group-hover:text-white transition-colors border border-gray-100">
+                  <i data-lucide="book-open" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2 leading-tight">Mouvement et Interactions</h3>
+                <div class="flex items-center gap-1 text-brand-dark font-semibold text-sm mt-4">Voir les chapitres <i data-lucide="chevron-right" class="w-4 h-4"></i></div>
+              </div>
+            </button>
+            <!-- Energy Card -->
+            <button data-theme-target="energy" class="bg-white rounded-3xl shadow-sm border border-gray-100 text-left hover:shadow-md transition-all group overflow-hidden flex flex-col h-full">
+              <div class="h-32 w-full relative overflow-hidden">
+                <img src="https://imgs.search.brave.com/Ke4Gxxr1T0WYTeYnqmn53njZ2aclC_YFq0HXTr3juxU/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/dW4ub3JnL3NpdGVz/L3VuMi51bi5vcmcv/ZmlsZXMvbWVldF90/aGVfc3VyZ2luZ19k/ZW1hbmRfZm9yX3N1/c3RhaW5hYmxlX2Vu/ZXJneV90aHVtYm5h/aWwuanBn" alt="Énergie" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" referrerPolicy="no-referrer" />
+                <div class="absolute inset-0 bg-gradient-to-t from-white/90 to-transparent"></div>
+              </div>
+              <div class="p-8 pt-0 -mt-8 relative z-10">
+                <div class="bg-white w-14 h-14 rounded-2xl flex items-center justify-center text-brand-dark mb-6 shadow-sm group-hover:bg-brand group-hover:text-white transition-colors border border-gray-100">
+                  <i data-lucide="zap" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2 leading-tight">L’Énergie: Conversions et Transferts</h3>
+                <div class="flex items-center gap-1 text-brand-dark font-semibold text-sm mt-4">Voir les chapitres <i data-lucide="chevron-right" class="w-4 h-4"></i></div>
+              </div>
+            </button>
+            <!-- Waves Card -->
+            <button data-theme-target="waves" class="bg-white rounded-3xl shadow-sm border border-gray-100 text-left hover:shadow-md transition-all group overflow-hidden flex flex-col h-full">
+              <div class="h-32 w-full relative overflow-hidden">
+                <img src="https://imgs.search.brave.com/jlfQs4EeLD82Ikh0dBexkvP1-BFQ9C_GXZHJesIHbzU/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jZG4u/Y3JlYXRlLnZpc3Rh/LmNvbS9hcGkvbWVk/aWEvc21hbGwvMTQ5/Njc3MDQwL3N0b2Nr/LXBob3RvLXdhdmVz/LW9mLWF0bGFudGlj/LW9jZWFu" alt="Ondes" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" referrerPolicy="no-referrer" />
+                <div class="absolute inset-0 bg-gradient-to-t from-white/90 to-transparent"></div>
+              </div>
+              <div class="p-8 pt-0 -mt-8 relative z-10">
+                <div class="bg-white w-14 h-14 rounded-2xl flex items-center justify-center text-brand-dark mb-6 shadow-sm group-hover:bg-brand group-hover:text-white transition-colors border border-gray-100">
+                  <i data-lucide="waves" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2 leading-tight">Ondes et Signaux</h3>
+                <div class="flex items-center gap-1 text-brand-dark font-semibold text-sm mt-4">Voir les chapitres <i data-lucide="chevron-right" class="w-4 h-4"></i></div>
+              </div>
+            </button>
+          </div>
+        </section>
+      </section>
+
+      <!-- Chemistry Section -->
+      <section data-theme-section="chemistry" class="hidden py-12 px-4 max-w-7xl mx-auto">
+        <div class="flex items-center gap-4 mb-12">
+          <div class="bg-brand-light p-4 rounded-2xl text-brand-dark">
+            <i data-lucide="flask-conical" class="w-6 h-6"></i>
+          </div>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Constitution et Transformations de la Matière</h2>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Chapter 1 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Importance de la mesure en chimie</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 1</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Pourquoi mesurer en chimie ? Techniques de mesure et précision.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/87F9PMeK-P8" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/87F9PMeK-P8/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/reactants-products-and-leftovers/latest/reactants-products-and-leftovers_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Chapter 2 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Grandeurs physiques liées à la quantité de matière</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 2</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Masse molaire, volume molaire, densité et relation avec la quantité de matière.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/jq2nGFX7OL4" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/jq2nGFX7OL4/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="video-selector flex flex-wrap gap-2">
+                <button data-video-url="https://www.youtube.com/embed/jq2nGFX7OL4" class="px-3 py-1 rounded-full text-xs font-semibold bg-brand text-white">Vidéo 1</button>
+                <button data-video-url="https://www.youtube.com/embed/-eabGjX8HJA" class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200">Vidéo 2</button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/molarity/latest/molarity_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Chapter 3 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">La concentration et les solutions électrolytiques</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 3</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Dissolution, concentration massique et molaire, dilution.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/faDFAM1AibA" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/faDFAM1AibA/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="video-selector flex flex-wrap gap-2">
+                <button data-video-url="https://www.youtube.com/embed/faDFAM1AibA" class="px-3 py-1 rounded-full text-xs font-semibold bg-brand text-white">Vidéo 1</button>
+                <button data-video-url="https://www.youtube.com/embed/NTikqiZEXJY" class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200">Vidéo 2</button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/concentration/latest/concentration_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Chapter 4 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Suivi d'une transformation chimique</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 4</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Tableau d'avancement, réactif limitant et bilan de matière.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/aGy-ny5Vu1M" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/aGy-ny5Vu1M/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/reactants-products-and-leftovers/latest/reactants-products-and-leftovers_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Chapter 5 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Conductimétrie</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 5</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Mesure des quantités de matière en solution par conductimétrie.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/zlKKGimE1Ks" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/zlKKGimE1Ks/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/acid-base-solutions/latest/acid-base-solutions_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Chapter 6 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Réactions acido-basiques</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 6</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Transfert de protons, couples acide/base et pH.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/I2zTQcnlavY" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/I2zTQcnlavY/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/ph-scale/latest/ph-scale_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Chapter 7 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Réactions d'oxydo-réduction</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 7</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Transfert d'électrons, couples Ox/Red et équilibrage des équations.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/oRX2L9zDtq4" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/oRX2L9zDtq4/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/reactants-products-and-leftovers/latest/reactants-products-and-leftovers_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Chapter 8 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Dosages (titrages) directs</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 8</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Détermination d'une concentration par titrage colorimétrique ou conductimétrique.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/swPRyee5Cpg" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/swPRyee5Cpg/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/acid-base-solutions/latest/acid-base-solutions_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Chapter 9 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Chimie Organique</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 9</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Molécules organiques, squelettes carbonés et groupes caractéristiques (Alcools).</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/ovGwDGBJ8NE" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/ovGwDGBJ8NE/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="video-selector flex flex-wrap gap-2">
+                <button data-video-url="https://www.youtube.com/embed/ovGwDGBJ8NE" class="px-3 py-1 rounded-full text-xs font-semibold bg-brand text-white">Vidéo 1</button>
+                <button data-video-url="https://www.youtube.com/embed/592tLsY7aRU" class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200">Vidéo 2</button>
+                <button data-video-url="https://www.youtube.com/embed/UydOQyZqEhA" class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200">Vidéo 3</button>
+                <button data-video-url="https://www.youtube.com/embed/NcvhvRfNYTw" class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200">Vidéo 4</button>
+                <button data-video-url="https://www.youtube.com/embed/s3_57T1IJF8" class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200">Vidéo 5</button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/molecule-shapes/latest/molecule-shapes_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Physics Motion Section -->
+      <section data-theme-section="physics_motion" class="hidden py-12 px-4 max-w-7xl mx-auto">
+        <div class="flex items-center gap-4 mb-12">
+          <div class="bg-brand-light p-4 rounded-2xl text-brand-dark">
+            <i data-lucide="book-open" class="w-6 h-6"></i>
+          </div>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Mouvement et Interactions</h2>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Chapter 1 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Rotation d'un solide indéformable autour d'un axe fixe</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 1</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Vitesse angulaire, abscisse curviligne et accélération dans le mouvement de rotation.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/4zOoz46h5A4" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/4zOoz46h5A4/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="video-selector flex flex-wrap gap-2">
+                <button data-video-url="https://www.youtube.com/embed/4zOoz46h5A4" class="px-3 py-1 rounded-full text-xs font-semibold bg-brand text-white">Vidéo 1</button>
+                <button data-video-url="https://www.youtube.com/embed/uQQYR4IOBko" class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200">Vidéo 2</button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/forces-and-motion-basics/latest/forces-and-motion-basics_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Chapter 2 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Travail et puissance d'une force</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 2</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Définition du travail d'une force constante, puissance moyenne et instantanée.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/j-G086IsAMQ" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/j-G086IsAMQ/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="video-selector flex flex-wrap gap-2">
+                <button data-video-url="https://www.youtube.com/embed/j-G086IsAMQ" class="px-3 py-1 rounded-full text-xs font-semibold bg-brand text-white">Vidéo 1</button>
+                <button data-video-url="https://www.youtube.com/embed/shNqlZMmSFU" class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200">Vidéo 2</button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/forces-and-motion-basics/latest/forces-and-motion-basics_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Chapter 3 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Travail et énergie cinétique</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 3</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Théorème de l'énergie cinétique pour un solide en translation ou en rotation.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/SBp3t_P1Xh4" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/SBp3t_P1Xh4/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/energy-skate-park-basics/latest/energy-skate-park-basics_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Chapter 4 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Énergie potentielle de pesanteur</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 4</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Définition de l'énergie potentielle de pesanteur et travail du poids.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/6_9Z8pT_i_c" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/6_9Z8pT_i_c/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/energy-skate-park-basics/latest/energy-skate-park-basics_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Chapter 5 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Énergie mécanique</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 5</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Conservation et non-conservation de l'énergie mécanique d'un solide.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/SBp3t_P1Xh4" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/SBp3t_P1Xh4/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/energy-skate-park-basics/latest/energy-skate-park-basics_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Chapter 6 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Champ électrostatique</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 6</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Force électrique, champ électrostatique uniforme et travail de la force électrique.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/shNqlZMmSFU" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/shNqlZMmSFU/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/charges-and-fields/latest/charges-and-fields_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Energy Section -->
+      <section data-theme-section="energy" class="hidden py-12 px-4 max-w-7xl mx-auto">
+        <div class="flex items-center gap-4 mb-12">
+          <div class="bg-brand-light p-4 rounded-2xl text-brand-dark">
+            <i data-lucide="zap" class="w-6 h-6"></i>
+          </div>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900">L’Énergie: Conversions et Transferts</h2>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Chapter 1 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Travail et énergie potentielle de pesanteur</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 1</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Travail du poids, énergie potentielle de pesanteur et conservation de l'énergie mécanique.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/wbUjK29xy3Q" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/wbUjK29xy3Q/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/energy-skate-park-basics/latest/energy-skate-park-basics_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Chapter 2 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Énergie thermique et transfert thermique</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 2</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Modes de transfert thermique, capacité thermique et changement d'état.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/6_9Z8pT_i_c" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/6_9Z8pT_i_c/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/states-of-matter/latest/states-of-matter_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Waves Section -->
+      <section data-theme-section="waves" class="hidden py-12 px-4 max-w-7xl mx-auto">
+        <div class="flex items-center gap-4 mb-12">
+          <div class="bg-brand-light p-4 rounded-2xl text-brand-dark">
+            <i data-lucide="waves" class="w-6 h-6"></i>
+          </div>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Ondes et Signaux</h2>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Chapter 1 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Visibilité d'un objet</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 1</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Conditions de visibilité d'un objet et propagation rectiligne de la lumière.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/IX-u13Yh2Xw" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/IX-u13Yh2Xw/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/bending-light/latest/bending-light_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Chapter 2 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Propagation de la lumière</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 2</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Réflexion et réfraction de la lumière, lois de Snell-Descartes.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/IX-u13Yh2Xw" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/IX-u13Yh2Xw/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/bending-light/latest/bending-light_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Chapter 3 -->
+          <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow chapter-card">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="text-2xl font-bold text-gray-800">Lentilles minces convergentes</h3>
+              <span class="bg-brand-light text-brand-dark px-3 py-1 rounded-full text-sm font-medium">Chapitre 3</span>
+            </div>
+            <p class="text-gray-600 mb-8 leading-relaxed">Caractéristiques d'une lentille, construction de l'image et relation de conjugaison.</p>
+            <div class="space-y-6">
+              <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 relative group video-wrapper">
+                <iframe src="" data-src="https://www.youtube.com/embed/IX-u13Yh2Xw" class="w-full h-full hidden" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                <button class="w-full h-full relative flex items-center justify-center group play-btn">
+                  <img src="https://img.youtube.com/vi/IX-u13Yh2Xw/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 thumbnail" referrerPolicy="no-referrer" />
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center shadow-xl transform transition-transform group-hover:scale-110">
+                      <i data-lucide="play" class="w-8 h-8 fill-current"></i>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="flex flex-col gap-4">
+                <a href="https://phet.colorado.edu/sims/html/geometric-optics/latest/geometric-optics_all.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-3 bg-brand-light text-brand-dark rounded-xl font-semibold hover:bg-brand-muted transition-colors w-full">
+                  <i data-lucide="flask-conical" class="w-4 h-4"></i> Simulation PhET
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section data-theme-section="about" class="hidden py-20 px-4 max-w-3xl mx-auto text-center">
+        <h2 class="text-4xl font-bold mb-8">À propos de ce projet</h2>
+        <p class="text-gray-600 text-lg leading-relaxed mb-12">
+          Ce site a été conçu pour aider les élèves de 1er BAC Sciences Expérimentales BIOF à naviguer dans un programme dense et exigeant. 
+          L'objectif est de centraliser les ressources essentielles : cours, méthodes, et outils interactifs basés sur le curriculum marocain.
+        </p>
+        
+        <div class="bg-brand-light p-10 rounded-[2.5rem] border border-brand-muted text-left shadow-sm">
+          <h3 class="font-bold text-2xl mb-8 flex items-center gap-3 text-brand-dark">
+            <i data-lucide="send" class="w-6 h-6 text-brand"></i> Contactez-nous
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="space-y-6">
+              <div class="flex items-center gap-4 group">
+                <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-brand group-hover:text-white transition-all">
+                  <i data-lucide="phone" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <p class="text-sm text-brand font-bold uppercase tracking-wider">Téléphone</p>
+                  <p class="text-brand-dark font-semibold">+212 674-206921</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-4 group">
+                <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-brand group-hover:text-white transition-all">
+                  <i data-lucide="mail" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <p class="text-sm text-brand font-bold uppercase tracking-wider">Email</p>
+                  <a href="mailto:SE.1BAC@School.com" class="text-brand-dark font-semibold hover:underline">SE.1BAC@School.com</a>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 group">
+              <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-brand group-hover:text-white transition-all shrink-0">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <p class="text-sm text-brand font-bold uppercase tracking-wider">Adresse</p>
+                <p class="text-brand-dark font-semibold">Rue California Casablanca</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-white py-12 mt-20">
+      <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div>
+          <div class="flex items-center gap-2 mb-6">
+            <i data-lucide="flask-conical" class="w-6 h-6 text-brand"></i>
+            <span class="font-bold text-xl">Physique 1ère Spé</span>
+          </div>
+          <p class="text-brand-light leading-relaxed">
+            Une ressource gratuite pour accompagner les élèves de Première dans leur apprentissage des sciences physiques et chimiques.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-bold text-lg mb-6">Liens Rapides</h4>
+          <ul class="space-y-3 text-brand-light">
+            <li><a href="https://www.alloschool.com/course/physique-et-chimie-1er-bac-sciences-experimentales-biof#!" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">Programme Officiel</a></li>
+            <li><button data-theme-target="about" class="hover:text-white transition-colors">Contact</button></li>
+          </ul>
+        </div>
+      </div>
+      <div class="max-w-7xl mx-auto px-4 mt-12 pt-8 border-t border-brand-dark/20 text-center text-brand text-sm">
+        &copy; 2026 Physique 1ère Spé - Créé pour la réussite des élèves.
+      </div>
+    </footer>
+
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Theme switching logic
+      const sections = ['home', 'chemistry', 'physics_motion', 'energy', 'waves', 'about'];
+      const navButtons = document.querySelectorAll('[data-theme-target]');
+      const contentSections = document.querySelectorAll('[data-theme-section]');
+
+      function setActiveTheme(themeId) {
+        contentSections.forEach(section => {
+          if (section.getAttribute('data-theme-section') === themeId) {
+            section.classList.remove('hidden');
+          } else {
+            section.classList.add('hidden');
+          }
+        });
+
+        navButtons.forEach(btn => {
+          if (btn.getAttribute('data-theme-target') === themeId) {
+            btn.classList.add('text-brand', 'font-semibold');
+          } else {
+            btn.classList.remove('text-brand', 'font-semibold');
+          }
+        });
+
+        window.scrollTo(0, 0);
+        
+        // Close mobile menu if open
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu) mobileMenu.classList.add('hidden');
+      }
+
+      navButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.getAttribute('data-theme-target');
+          if (target) setActiveTheme(target);
+        });
+      });
+
+      // Mobile menu toggle
+      const menuBtn = document.getElementById('menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+
+      // Dropdown logic
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        const trigger = dropdown.querySelector('.dropdown-trigger');
+        const menu = dropdown.querySelector('.dropdown-menu');
+        if (trigger && menu) {
+          trigger.addEventListener('mouseenter', () => menu.classList.remove('hidden'));
+          dropdown.addEventListener('mouseleave', () => menu.classList.add('hidden'));
+        }
+      });
+
+      // Video play logic
+      const videoWrappers = document.querySelectorAll('.video-wrapper');
+      videoWrappers.forEach(wrapper => {
+        const playBtn = wrapper.querySelector('.play-btn');
+        const iframe = wrapper.querySelector('iframe');
+        const thumbnail = wrapper.querySelector('.thumbnail');
+        if (playBtn && iframe && thumbnail) {
+          playBtn.addEventListener('click', () => {
+            iframe.classList.remove('hidden');
+            thumbnail.classList.add('hidden');
+            const src = iframe.getAttribute('data-src');
+            if (src) iframe.setAttribute('src', src + '?autoplay=1');
+          });
+        }
+      });
+
+      // Video selector logic
+      const videoSelectors = document.querySelectorAll('.video-selector');
+      videoSelectors.forEach(selector => {
+        const buttons = selector.querySelectorAll('button');
+        const wrapper = selector.closest('.chapter-card')?.querySelector('.video-wrapper');
+        const iframe = wrapper?.querySelector('iframe');
+        const thumbnail = wrapper?.querySelector('.thumbnail');
+
+        buttons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const url = btn.getAttribute('data-video-url');
+            if (url && iframe && thumbnail) {
+              iframe.setAttribute('data-src', url);
+              iframe.classList.add('hidden');
+              thumbnail.classList.remove('hidden');
+              
+              // Update thumbnail
+              const idMatch = url.match(/embed\/([^?]+)/);
+              if (idMatch) {
+                thumbnail.src = `https://img.youtube.com/vi/${idMatch[1]}/hqdefault.jpg`;
+              }
+
+              // Update active button
+              buttons.forEach(b => b.classList.remove('bg-brand', 'text-white'));
+              buttons.forEach(b => b.classList.add('bg-gray-100', 'text-gray-600'));
+              btn.classList.remove('bg-gray-100', 'text-gray-600');
+              btn.classList.add('bg-brand', 'text-white');
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
